@@ -28,7 +28,7 @@ public class Admin {
 	private String sector;
 	
 	@Column(name = "contact")
-	private int contact;
+	private long contact;
 	
 	@Column(name = "address")
 	private String address;
@@ -81,11 +81,11 @@ public class Admin {
 		this.sector = sector;
 	}
 
-	public int getContact() {
+	public long getContact() {
 		return contact;
 	}
 
-	public void setContact(int contact) {
+	public void setContact(long contact) {
 		this.contact = contact;
 	}
 
