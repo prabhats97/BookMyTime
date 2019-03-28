@@ -52,5 +52,5 @@ public class SlotService {
 			throw new RecordNotFoundException("Slot Id: "+ slotId + " doesn't exist");
 		slotRepository.deleteById(slotId);
 	}	
-	
+
 }

@@ -7,7 +7,7 @@ import com.book.mytime.domain.Slot;
 
 @Repository
 public interface SlotRepository extends JpaRepository<Slot,String>{
-	
+
 	List<Slot> findAllByAdminEmail(String adminEmail);
 	Boolean existsByAdminEmail(String adminEmail);
 }
