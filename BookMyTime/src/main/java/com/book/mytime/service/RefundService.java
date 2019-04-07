@@ -20,8 +20,8 @@ public class RefundService {
 	private RefundRepository refundRepository;
 
 	public Refund addRefund(Refund refund){
-		if(refundRepository.existsById(refund.getBookingId()))
-			throw new IdAlreadyExists("Booking Id: " + refund.getBookingId() + " already exists");
+		if(refundRepository.existsById(refund.getRefundId()))
+			throw new IdAlreadyExists("Refund Id: " + refund.getRefundId() + " already exists");
 		return refundRepository.save(refund);
 	}
 
@@ -33,23 +33,30 @@ public class RefundService {
 	}
 
 
-	public Refund getRefundById(String bookingId) {
-		if(!refundRepository.existsById(bookingId))
-			throw new RecordNotFoundException("Booking Id: "+ bookingId + " doesn't exist");
-		return refundRepository.findById(bookingId).get();
+	public Refund getRefundById(String refundId) {
+		if(!refundRepository.existsById(refundId))
+			throw new RecordNotFoundException("Refund Id: "+ refundId + " doesn't exist");
+		return refundRepository.findById(refundId).get();
+	}
+	
+
+	public List<Refund> getAllRefundByBookingId(String bookingId) {
+		if(!refundRepository.existsByBookingId(bookingId))
+			throw new RecordNotFoundException("Refunds with: "+ bookingId + " doesn't exist");
+		return refundRepository.findAllByBookingId(bookingId);
 	}
 
-
-	public Refund updateRefundById(String bookingId, Refund refund) {
-		if(!refundRepository.existsById(bookingId))
-			throw new RecordNotFoundException("Booking Id: "+ bookingId + " doesn't exist");
+	public Refund updateRefundById(String refundId, Refund refund) {
+		if(!refundRepository.existsById(refundId))
+			throw new RecordNotFoundException("Refund Id: "+ refundId + " doesn't exist");
 		return refundRepository.save(refund);
 	}
 
 
-	public void deleteRefundById(String bookingId) {
-		if(!refundRepository.existsById(bookingId))
-			throw new RecordNotFoundException("Booking Id: "+ bookingId + " doesn't exist");
-		refundRepository.deleteById(bookingId);
+	public void deleteRefundById(String refundId) {
+		if(!refundRepository.existsById(refundId))
+			throw new RecordNotFoundException("Booking Id: "+ refundId + " doesn't exist");
+		refundRepository.deleteById(refundId);
 	}
+
 }

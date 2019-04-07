@@ -10,6 +10,9 @@ import javax.persistence.Table;
 public class Refund {
 
 	@Id
+	@Column(name = "refund_id")
+	private String refundId;
+
 	@Column(name = "booking_id")
 	private String bookingId;
 	
@@ -18,6 +21,14 @@ public class Refund {
 	
 	@Column(name = "refund_status")
 	private String refundStatus;
+	
+	public String getRefundId() {
+		return refundId;
+	}
+
+	public void setRefundId(String refundId) {
+		this.refundId = refundId;
+	}
 	
 	public String getBookingId() {
 		return bookingId;

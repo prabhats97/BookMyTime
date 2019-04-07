@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.book.mytime.domain.Admin;
 import com.book.mytime.domain.User;
 import com.book.mytime.service.UserService;
 
@@ -47,6 +49,15 @@ public class UserController {
 		return new ResponseEntity<User>(userService.getUserById(userEmail),HttpStatus.OK);		
 	}
 	
+	/* To update User details by Id */
+
+	@PutMapping(value = "/{userEmail}")
+	public ResponseEntity<User> updateUserById(@PathVariable String userEmail,@RequestBody User user)
+	{
+		return new ResponseEntity<User>(userService.updateUserById(userEmail,user),HttpStatus.OK);
+	}
+
+	
 	/* To delete a user record by Id */
 
 	@DeleteMapping(value = "/{userEmail}" )
@@ -54,5 +65,15 @@ public class UserController {
 	{
 		userService.deleteUserById(userEmail);
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+/* To validate an admin for login */
+	
+	@PostMapping(value = "validateUser/{userEmail}")
+	public ResponseEntity<?> validateUser(@PathVariable String userEmail,@RequestParam String password)
+	{
+		if(userService.validateUser(userEmail, password))
+			return new ResponseEntity<>(HttpStatus.FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 }

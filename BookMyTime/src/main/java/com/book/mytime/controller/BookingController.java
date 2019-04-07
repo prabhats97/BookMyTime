@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.book.mytime.domain.Booking;
@@ -69,20 +70,6 @@ public class BookingController {
 		return new ResponseEntity<List<Booking>>(bookingService.getAllBookingByUserId(userEmail),HttpStatus.OK);		
 	}
 	
-	/* To fetch booking details by Admin Email */
-
-	@GetMapping(value = "/admin/{adminEmail}")
-	public ResponseEntity<List<Booking>> getAllBookingByAdminId (@PathVariable String adminEmail)
-	{
-		List<Slot> slotList = slotService.getAllSlotByAdminId(adminEmail);
-		List<Booking> bookingList = new ArrayList<Booking>();
-		for(Slot slot : slotList)
-		{
-			bookingList.add(bookingService.getBookingBySlotId(slot.getSlotId()));
-		}
-		return new ResponseEntity<List<Booking>>(bookingList,HttpStatus.OK);		
-	}
-
 	/* To cancel booking */
 
 	@PutMapping(value = "/{bookingId}")
@@ -99,4 +86,19 @@ public class BookingController {
 		bookingService.deleteBookingById(bookingId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+/* To fetch booking details by Admin Email */
+	
+	@GetMapping(value = "/admin/{adminEmail}")
+	public ResponseEntity<List<Booking>> getAllBookingByAdminId(@PathVariable String adminEmail)
+	{
+		List<Slot> slots= slotService.getAllSlotByAdminId(adminEmail);
+		List<Booking> bookings= new ArrayList<Booking>();
+		for (Slot slot:slots)
+		{
+			bookings.add(bookingService.getBookingBySlotId(slot.getSlotId()));
+		}
+			
+		return new ResponseEntity<List<Booking>>(bookings,HttpStatus.OK);
+    }
 }

@@ -38,13 +38,6 @@ public class BookingService {
 		return bookingRepository.findById(bookingId).get();
 	}
 
-
-	public Booking getBookingBySlotId(String slotId) {
-		if(!bookingRepository.existsBySlotId(slotId))
-			throw new RecordNotFoundException("Slot Id: "+ slotId + " doesn't exist");
-		return bookingRepository.findBySlotId(slotId);
-	}
-
 	public List<Booking> getAllBookingByUserId(String userEmail) {
 		if(!bookingRepository.existsByUserEmail(userEmail))
 			throw new RecordNotFoundException("Bookings: "+ userEmail + " doesn't exist");
@@ -62,5 +55,11 @@ public class BookingService {
 			throw new RecordNotFoundException("Booking Id: "+ bookingId + " doesn't exist");
 		bookingRepository.deleteById(bookingId);
 
+	}
+
+	public Booking getBookingBySlotId(String slotId) {
+		if(!bookingRepository.existsBySlotId(slotId))
+			throw new RecordNotFoundException("Bookings with slot: "+ slotId + " doesn't exist");
+		return bookingRepository.findBySlotId(slotId);
 	}
 }

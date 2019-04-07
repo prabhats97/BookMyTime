@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.book.mytime.domain.Admin;
 import com.book.mytime.domain.User;
 import com.book.mytime.exception.IdAlreadyExists;
 import com.book.mytime.exception.RecordNotFoundException;
@@ -43,5 +44,21 @@ public class UserService {
 		if(!userRepository.existsById(userEmail))
 			throw new RecordNotFoundException("Email Id: "+ userEmail + " doesn't exist");
 		userRepository.deleteById(userEmail);
+	}
+
+	public User updateUserById(String userEmail, User user) {
+		if(!userRepository.existsById(userEmail))
+			throw new RecordNotFoundException("Email Id: "+ userEmail + " doesn't exist");
+		return userRepository.save(user);
+	}
+
+	public boolean validateUser(String userEmail, String password) {
+		if(!userRepository.existsById(userEmail))
+			throw new RecordNotFoundException("Email Id: "+ userEmail + " doesn't exist");
+		User user = userRepository.findById(userEmail).get();
+		if(user.getPassword() == password)
+			return true; 
+		return false;
 	}	
+	
 }
