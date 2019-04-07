@@ -2,8 +2,6 @@ package com.book.mytime.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -23,9 +21,6 @@ public class Booking {
 
 	@Column(name = "paid_amount", columnDefinition="Decimal(10,2) default '0.00'")
 	private long paidAmount;
-
-	@Column(name = "balance_amount", columnDefinition="Decimal(10,2) default '0.00'")
-	private long balanceAmount;
 
 	@Column(name = "booking_status")
 	private String bookingStatus;
@@ -63,14 +58,6 @@ public class Booking {
 
 	public void setPaidAmount(long paidAmount) {
 		this.paidAmount = paidAmount;
-	}
-
-	public long getBalanceAmount() {
-		return balanceAmount;
-	}
-
-	public void setBalanceAmount(long balanceAmount) {
-		this.balanceAmount = balanceAmount;
 	}
 
 	public String getBookingStatus() {

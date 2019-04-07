@@ -40,29 +40,37 @@ public class RefundController {
 		return new ResponseEntity<List<Refund>>(refundService.getAllRefund(),HttpStatus.OK);	
 	}
 
+	/* To fetch refund details by Refund Id */
+
+	@GetMapping(value = "/{refundId}")
+	public ResponseEntity<Refund> getRefundById (@PathVariable String refundId)
+	{
+		return new ResponseEntity<Refund>(refundService.getRefundById(refundId),HttpStatus.OK);		
+	}
+	
 	/* To fetch refund details by Booking Id */
 
-	@GetMapping(value = "/{bookingId}")
-	public ResponseEntity<Refund> getRefundById (@PathVariable String bookingId)
+	@GetMapping(value = "booking/{bookingId}")
+	public ResponseEntity<List<Refund>> getRefundByBookingId (@PathVariable String bookingId)
 	{
-		return new ResponseEntity<Refund>(refundService.getRefundById(bookingId),HttpStatus.OK);		
+		return new ResponseEntity<List<Refund>>(refundService.getAllRefundByBookingId(bookingId),HttpStatus.OK);		
 	}
 
 	/* To update refund details by Booking Id */
 
-	@PutMapping(value = "/{bookingId}")
-	public ResponseEntity<Refund> updateRefundById(@PathVariable String bookingId,@RequestBody Refund refund)
+	@PutMapping(value = "/{refundId}")
+	public ResponseEntity<Refund> updateRefundById(@PathVariable String refundId,@RequestBody Refund refund)
 	{
-		return new ResponseEntity<Refund>(refundService.updateRefundById(bookingId,refund),HttpStatus.OK);
+		return new ResponseEntity<Refund>(refundService.updateRefundById(refundId,refund),HttpStatus.OK);
 	}
 
 
 	/* To delete refund record by Id */
 
-	@DeleteMapping(value = "/{bookingId}" )
-	public ResponseEntity<?> deleteRefundById(@PathVariable String bookingId)
+	@DeleteMapping(value = "/{refundId}" )
+	public ResponseEntity<?> deleteRefundById(@PathVariable String refundId)
 	{
-		refundService.deleteRefundById(bookingId);
+		refundService.deleteRefundById(refundId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	

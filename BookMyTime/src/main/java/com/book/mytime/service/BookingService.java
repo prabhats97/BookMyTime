@@ -65,4 +65,10 @@ public class BookingService {
 		bookingRepository.deleteById(bookingId);
 
 	}
+
+	public Booking getBookingBySlotId(String slotId) {
+		if(!bookingRepository.existsBySlotId(slotId))
+			throw new RecordNotFoundException("Bookings with slot: "+ slotId + " doesn't exist");
+		return bookingRepository.findBySlotId(slotId);
+	}
 }

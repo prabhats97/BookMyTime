@@ -1,5 +1,6 @@
 package com.book.mytime.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.book.mytime.domain.Booking;
+import com.book.mytime.domain.Slot;
 import com.book.mytime.service.BookingService;
+import com.book.mytime.service.SlotService;
 
 @RestController
 @RequestMapping("/booking")
@@ -84,4 +88,21 @@ public class BookingController {
 		bookingService.deleteBookingById(bookingId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+/* To fetch booking details by Admin Email */
+	
+	@Autowired
+	private SlotService slotService;
+	@GetMapping(value = "/admin/{adminEmail}")
+	public ResponseEntity<List<Booking>> getAllBookingByAdminId(@PathVariable String adminEmail)
+	{
+		List<Slot> slots= slotService.getAllSlotByAdminId(adminEmail);
+		List<Booking> bookings= new ArrayList<Booking>();
+		for (Slot slot:slots)
+		{
+			bookings.add(bookingService.getBookingBySlotId(slot.getSlotId()));
+		}
+			
+		return new ResponseEntity<List<Booking>>(bookings,HttpStatus.OK);
+    }
 }
