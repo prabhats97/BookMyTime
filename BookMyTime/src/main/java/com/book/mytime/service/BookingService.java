@@ -38,15 +38,6 @@ public class BookingService {
 		return bookingRepository.findById(bookingId).get();
 	}
 
-	/*
-	public List<Booking> getAllBookingByAdminId(String adminEmail) {
-		if(!bookingRepository.existsByAdminEmail(adminEmail))
-			throw new RecordNotFoundException("Bookings with "+ adminEmail + " doesn't exist");
-		return bookingRepository.findAllByAdminEmail(adminEmail);
-	}
-	*/
-
-
 	public List<Booking> getAllBookingByUserId(String userEmail) {
 		if(!bookingRepository.existsByUserEmail(userEmail))
 			throw new RecordNotFoundException("Bookings: "+ userEmail + " doesn't exist");

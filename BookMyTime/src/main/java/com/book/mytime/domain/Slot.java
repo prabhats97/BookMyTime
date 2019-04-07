@@ -32,7 +32,7 @@ public class Slot {
 	private Boolean slotAvailable;
 	
 	@Column(name = "serviceCharge")
-	private String serviceCharge;
+	private double serviceCharge;
 	
 	@Column(name = "location")
 	private String location;
@@ -85,11 +85,11 @@ public class Slot {
 		this.slotAvailable = slotAvailable;
 	}
 
-	public String getServiceCharge() {
+	public double getServiceCharge() {
 		return serviceCharge;
 	}
 
-	public void setServiceCharge(String serviceCharge) {
+	public void setServiceCharge(double serviceCharge) {
 		this.serviceCharge = serviceCharge;
 	}
 

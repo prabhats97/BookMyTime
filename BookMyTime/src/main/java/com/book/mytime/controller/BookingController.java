@@ -2,7 +2,6 @@ package com.book.mytime.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +26,9 @@ public class BookingController {
 
 	@Autowired
 	private BookingService bookingService;
+	
+	@Autowired
+	private SlotService slotService;
 
 	/* To add a new booking */ 
 
@@ -51,18 +53,14 @@ public class BookingController {
 	{
 		return new ResponseEntity<Booking>(bookingService.getBookingById(bookingId),HttpStatus.OK);		
 	}
+	
+	/* To fetch booking details by Slot Id */
 
-
-	/* To fetch booking details by Admin Email */
-
-	/*
-	@GetMapping(value = "/admin/{adminEmail}")
-	public ResponseEntity<List<Booking>> getAllBookingByAdminId (@PathVariable String adminEmail)
+	@GetMapping(value = "/slot/{slotId}")
+	public ResponseEntity<Booking> getBookingBySlotId (@PathVariable String slotId)
 	{
-		return new ResponseEntity<List<Booking>>(bookingService.getAllBookingByAdminId(adminEmail),HttpStatus.OK);		
+		return new ResponseEntity<Booking>(bookingService.getBookingBySlotId(slotId),HttpStatus.OK);		
 	}
-
-	 */
 
 	/* To fetch booking details by User Email */
 
@@ -71,7 +69,7 @@ public class BookingController {
 	{
 		return new ResponseEntity<List<Booking>>(bookingService.getAllBookingByUserId(userEmail),HttpStatus.OK);		
 	}
-
+	
 	/* To cancel booking */
 
 	@PutMapping(value = "/{bookingId}")
@@ -91,8 +89,6 @@ public class BookingController {
 	
 /* To fetch booking details by Admin Email */
 	
-	@Autowired
-	private SlotService slotService;
 	@GetMapping(value = "/admin/{adminEmail}")
 	public ResponseEntity<List<Booking>> getAllBookingByAdminId(@PathVariable String adminEmail)
 	{
