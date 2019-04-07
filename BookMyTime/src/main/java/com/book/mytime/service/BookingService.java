@@ -38,14 +38,12 @@ public class BookingService {
 		return bookingRepository.findById(bookingId).get();
 	}
 
-	/*
-	public List<Booking> getAllBookingByAdminId(String adminEmail) {
-		if(!bookingRepository.existsByAdminEmail(adminEmail))
-			throw new RecordNotFoundException("Bookings with "+ adminEmail + " doesn't exist");
-		return bookingRepository.findAllByAdminEmail(adminEmail);
-	}
-	*/
 
+	public Booking getBookingBySlotId(String slotId) {
+		if(!bookingRepository.existsBySlotId(slotId))
+			throw new RecordNotFoundException("Slot Id: "+ slotId + " doesn't exist");
+		return bookingRepository.findBySlotId(slotId);
+	}
 
 	public List<Booking> getAllBookingByUserId(String userEmail) {
 		if(!bookingRepository.existsByUserEmail(userEmail))

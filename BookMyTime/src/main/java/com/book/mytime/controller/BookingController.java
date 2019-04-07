@@ -1,7 +1,7 @@
 package com.book.mytime.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.book.mytime.domain.Booking;
+import com.book.mytime.domain.Slot;
 import com.book.mytime.service.BookingService;
+import com.book.mytime.service.SlotService;
 
 @RestController
 @RequestMapping("/booking")
@@ -23,6 +25,9 @@ public class BookingController {
 
 	@Autowired
 	private BookingService bookingService;
+	
+	@Autowired
+	private SlotService slotService;
 
 	/* To add a new booking */ 
 
@@ -47,18 +52,14 @@ public class BookingController {
 	{
 		return new ResponseEntity<Booking>(bookingService.getBookingById(bookingId),HttpStatus.OK);		
 	}
+	
+	/* To fetch booking details by Slot Id */
 
-
-	/* To fetch booking details by Admin Email */
-
-	/*
-	@GetMapping(value = "/admin/{adminEmail}")
-	public ResponseEntity<List<Booking>> getAllBookingByAdminId (@PathVariable String adminEmail)
+	@GetMapping(value = "/slot/{slotId}")
+	public ResponseEntity<Booking> getBookingBySlotId (@PathVariable String slotId)
 	{
-		return new ResponseEntity<List<Booking>>(bookingService.getAllBookingByAdminId(adminEmail),HttpStatus.OK);		
+		return new ResponseEntity<Booking>(bookingService.getBookingBySlotId(slotId),HttpStatus.OK);		
 	}
-
-	 */
 
 	/* To fetch booking details by User Email */
 
@@ -66,6 +67,20 @@ public class BookingController {
 	public ResponseEntity<List<Booking>> getAllBookingByUserId (@PathVariable String userEmail)
 	{
 		return new ResponseEntity<List<Booking>>(bookingService.getAllBookingByUserId(userEmail),HttpStatus.OK);		
+	}
+	
+	/* To fetch booking details by Admin Email */
+
+	@GetMapping(value = "/admin/{adminEmail}")
+	public ResponseEntity<List<Booking>> getAllBookingByAdminId (@PathVariable String adminEmail)
+	{
+		List<Slot> slotList = slotService.getAllSlotByAdminId(adminEmail);
+		List<Booking> bookingList = new ArrayList<Booking>();
+		for(Slot slot : slotList)
+		{
+			bookingList.add(bookingService.getBookingBySlotId(slot.getSlotId()));
+		}
+		return new ResponseEntity<List<Booking>>(bookingList,HttpStatus.OK);		
 	}
 
 	/* To cancel booking */
